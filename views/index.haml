@@ -1,0 +1,15 @@
+!!!
+%html
+    %body
+        %form{:action => "/", :method => "post"}
+            Title:
+            %input{:name => "title", :size => "40"}
+            %br
+            URL:
+            %input{:name => "url", :size => "80", :value => "http://"}
+            %br
+            %input{:type => "submit", :value => "send"}
+            - @bookmark.each do |bookmark|
+                %div= bookmark['title']
+                %div= bookmark['url']
+                %hr
