@@ -4,6 +4,10 @@ require 'haml'
 require "rexml/document"
 include REXML
 
+helpers do
+  include Rack::Utils; alias_method :h, :escape_html
+end
+
 def xml2view(file)
   File.open(file,"r") do |xmlfile|
     xmldata = Document.new(xmlfile)

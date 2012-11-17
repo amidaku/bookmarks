@@ -10,6 +10,6 @@
             %br
             %input{:type => "submit", :value => "send"}
             - @bookmark.each do |bookmark|
-                %div= bookmark['title']
-                %div= bookmark['url']
+                %div= h bookmark['title']
+                %div= h bookmark['url']
                 %hr
