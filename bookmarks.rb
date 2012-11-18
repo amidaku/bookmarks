@@ -47,6 +47,13 @@ end
 
 datafile = "urldata.xml"
 
+get '/:page' do
+  @page = params[:page].to_i
+  @items = Items.order_by(:id.desc).paginate(@page, 20)
+  xml2view(datafile)
+  haml :index
+end
+
 get '/' do
   initfile(datafile)
   xml2view(datafile)
