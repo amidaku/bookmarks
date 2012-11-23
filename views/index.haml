@@ -12,5 +12,6 @@
         - @bookmarks.each do |bookmark|
             %div
                 %a{:href => bookmark['url']}= h bookmark['title']
-            %hr
-        %div#page #{@now}
+            - unless bookmark['title'] == ''
+                %hr
+        %div#record 登録数#{@now}

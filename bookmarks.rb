@@ -21,29 +21,31 @@ get '/page/:page' do
   getpage = XmlData.new
   getpage.file = datafile
   @bookmarks = getpage.xml2view(page, items_par_page)
-  @now = page
+  @now = getpage.max_record
   haml :index
 end
 
 get '/' do
   Initialize.initfile(datafile)
-  rootpage = XmlData.new
-  rootpage.file = datafile
-  @bookmarks = rootpage.xml2view(1, items_par_page)
-  @now = now
-
-  haml :index
+  redirect '/page/1'
 end
 
 post "/" do
-  Initialize.initfile(datafile)
-  postroot = XmlData.new
-  postroot.file = datafile
-  postroot.make_xml(params[:title], params[:url])
-  @bookmarks = postroot.xml2view(1, items_par_page)
-  @now = now
-  haml :index
-
+  title = params[:title]
+  url = params[:url]
+  if title.nil? || url.nil?
+      redirect '/'
+  elsif title == '' || url == ''
+      redirect '/'
+  else
+	  Initialize.initfile(datafile)
+	  postroot = XmlData.new
+	  postroot.file = datafile
+	  postroot.make_xml(params[:title], params[:url])
+	  @bookmarks = postroot.xml2view(1, items_par_page)
+	  @now = postroot.max_record
+	  haml :index
+  end
 end
 
 not_found do
