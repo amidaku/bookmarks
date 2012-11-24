@@ -36,8 +36,12 @@ class XmlData
 	  end
 	end
 	
-	def max_record
+	def count_records
 	  xmltree = Document.new File.new(@file)
-	  record = (xmltree.elements['root'].size.to_i - 1) / 2 #　except 'root' and 'url' elements count
+	  @@record = (xmltree.elements['root'].size.to_i - 1) / 2 #　except 'root' and 'url' elements count
+	end
+	
+	def count_pages(record_per_page)
+	  page = @@record / record_per_page
 	end
 end

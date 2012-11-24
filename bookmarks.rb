@@ -9,7 +9,7 @@ helpers do
 end
 
 
-items_par_page = 5
+items_per_page = 5
 datafile = "urldata.xml"
 now = 1
 
@@ -20,8 +20,9 @@ get '/page/:page' do
   end
   getpage = XmlData.new
   getpage.file = datafile
-  @bookmarks = getpage.xml2view(page, items_par_page)
-  @now = getpage.max_record
+  @bookmarks = getpage.xml2view(page, items_per_page)
+  @now_rec = getpage.count_records
+  @now_page = getpage.count_pages(items_per_page)
   haml :index
 end
 
@@ -42,8 +43,8 @@ post "/" do
 	  postroot = XmlData.new
 	  postroot.file = datafile
 	  postroot.make_xml(params[:title], params[:url])
-	  @bookmarks = postroot.xml2view(1, items_par_page)
-	  @now = postroot.max_record
+	  @bookmarks = postroot.xml2view(1, items_per_page)
+	  @now_rec = postroot.count_records
 	  haml :index
   end
 end
