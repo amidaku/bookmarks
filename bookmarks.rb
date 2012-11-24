@@ -8,6 +8,17 @@ helpers do
   include Rack::Utils; alias_method :h, :escape_html
 end
 
+def paging(now_page, last_page)
+  #last_page = getpage.count_pages(items_per_page)
+  if now_page == 1
+    paging_html = "1 <a href=\"/page/2\">2</a>"
+  elsif now_page == last_page
+    paging_html = "<a href=\"/page/#{last_page - 1}\">#{last_page - 1}</a> #{last_page}"
+  else
+    paging_html = "<a href=\"/page/#{now_page - 1}\">#{now_page - 1}</a> #{now_page} <a href=\"/page/#{now_page + 1}\">#{now_page + 1}</a>"
+  end
+end
+
 
 items_per_page = 5
 datafile = "urldata.xml"
@@ -22,7 +33,7 @@ get '/page/:page' do
   getpage.file = datafile
   @bookmarks = getpage.xml2view(page, items_per_page)
   @now_rec = getpage.count_records
-  @now_page = getpage.count_pages(items_per_page)
+  @now_page = paging(page, getpage.count_pages(items_per_page))
   haml :index
 end
 
