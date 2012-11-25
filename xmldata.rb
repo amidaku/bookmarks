@@ -42,6 +42,6 @@ class XmlData
 	end
 	
 	def count_pages(record_per_page)
-	  page = @@record / record_per_page
+	  page = @@record / record_per_page + 1
 	end
 end
