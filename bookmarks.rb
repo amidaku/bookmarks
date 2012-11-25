@@ -45,9 +45,9 @@ post "/" do
 		postroot = XmlData.new
 		postroot.file = datafile
 		postroot.make_xml(params[:title], params[:url])
+		@now_rec = postroot.count_records
 		last_page = postroot.count_pages(items_per_page)
 		@bookmarks = postroot.xml2view(last_page, items_per_page)
-		@now_rec = postroot.count_records
 		@paging = Page.paging(last_page, last_page)
 		haml :index
 	end
